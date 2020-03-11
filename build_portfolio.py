@@ -30,12 +30,12 @@ def build_portfolio(df_price: pd.DataFrame, df_cap: pd.DataFrame) -> pd.Series:
     # Start portfolio simulation from first day in Price dataframe
     day_curr = pd.Timestamp('1900-01-01T12')
     for day in df_price.index:
-        # If today is the fisrt business day in month  or it is initial day
+        # If today is the fisrt business day of the month  or it is initial day
         # we rebalance our portfolio
         if day.year > day_curr.year or day.month > day_curr.month:
             day_curr = day
             # Get TOP10 stocks by market cap using last available data
-            # If cap data was udated today - use previous value (to avoid bias)
+            # If cap data was updated today - use previous value (to avoid bias)
             df_cap_curr = df_cap.loc[df_cap.index < day_curr].iloc[-1]
             top_10_curr = df_cap_curr.nlargest(10).index
             # Get current 20 days returns
